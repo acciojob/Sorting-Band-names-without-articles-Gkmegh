@@ -1,39 +1,32 @@
-function sortBands(bands) {
-  const articles = ["a", "an", "the"];
-  
-  const sortedBands = bands.sort((a, b) => {
-    const nameA = a.toLowerCase();
-    const nameB = b.toLowerCase();
-    
-    // Remove articles from the beginning of the band names
-    for (const article of articles) {
-      if (nameA.startsWith(article + " ")) {
-        nameA = nameA.slice(article.length + 1);
-      }
-      if (nameB.startsWith(article + " ")) {
-        nameB = nameB.slice(article.length + 1);
-      }
-    }
-    
-    return nameA.localeCompare(nameB);
-  });
-  
-  return sortedBands;
-}
+let arr = ['Tajmahal', 'Victoria Memorial', 'The Virupaksha Temple'];
+let updatedList = arr.map((element) => {
+	// ["a", "some", "one"]
+	let words = element.split(" ") ;
+	let updatedString = words.reduce((prev, current, index) => {
+		if(current != "The" && current != "an" && current != "a"){
+			return prev + " " + current ;
+		}
+		return prev ;
+	}, "")
 
-const bandNames = ["The Beatles", "Led Zeppelin", "Pink Floyd", "Aerosmith", "Anathema", "Queen"];
-const sortedBands = sortBands(bandNames);
+	return updatedString ;
+}) ;
+let mp = {} ; // {"some one" : "a some one"}
+updatedList.forEach( (element, index) => {
+	mp[element] = arr[index] ;
+});
+// ["some one" , "mno abc" , "abc kh"]
 
-// Creating an unordered list with sorted band names
-const ul = document.createElement("ul");
-ul.id = "band";
+updatedList.sort(); 
 
-for (const band of sortedBands) {
-  const li = document.createElement("li");
-  li.textContent = band;
-  ul.appendChild(li);
-}
+let finalAns = updatedList.map((element) => {
+    return mp[element] ;
+})
 
-// Add the unordered list to the document
-document.body.appendChild(ul);
-module.exports = sortBands;
+const ul = document.getElementById("band")
+
+finalAns.forEach((item) => {
+	const li = document.createElement("li");
+	li.innerText = item ;
+	ul.append(li);
+})
